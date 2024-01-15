@@ -1,0 +1,42 @@
+<section class="row">
+  <h2>Reactive forms demo</h2>
+
+  <form [formGroup]="formUser" (ngSubmit)="submitUserForm()" class="col s12">
+    <div class="input-field col s6">
+      <input type="text" formControlName="nom" placeholder="Nom...">
+
+      <ng-container *ngIf="formUser.controls['nom'].errors && formUser.controls['nom'].touched">
+        <span *ngIf="formUser.controls['nom'].errors?.['required']">
+          Ce champ est requis.
+        </span>
+        <span *ngIf="formUser.controls['nom'].errors?.['minlength']">
+          Le longueur minimale doit être égale ou supérieure à {{formUser.controls['nom'].errors?.['minlength'].requiredLength}}
+        </span>
+      </ng-container>
+    </div>
+    <div class="input-field col s6">
+      <input type="text" formControlName="prenom" placeholder="Prenom...">
+
+      <ng-container *ngIf="formUser.controls['prenom'].errors && formUser.controls['prenom'].touched">
+        <span *ngIf="formUser.controls['prenom'].errors?.['required']">
+          Ce champ est requis.
+        </span>
+        <span *ngIf="formUser.controls['prenom'].errors?.['maxlength']">
+          Le longueur maximale doit être égale ou inférieure à {{formUser.controls['prenom'].errors?.['maxlength'].requiredLength}}
+        </span>
+      </ng-container>
+    </div>
+    <div class="input-field col s6">
+      <input type="tel" formControlName="tel" placeholder="Tel...">
+
+      <ng-container *ngIf="formUser.controls['tel'].errors && formUser.controls['tel'].touched">
+        <span *ngIf="formUser.controls['tel'].errors?.['tel']">
+          {{formUser.controls['tel'].errors?.['tel']}}
+        </span>
+      </ng-container>
+    </div>
+    <button type="submit" class="card-panel light-green accent-3" *ngIf="formUser.valid">
+      Submit
+    </button>
+  </form>
+</section>

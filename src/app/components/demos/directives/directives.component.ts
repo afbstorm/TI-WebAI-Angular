@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 
 interface test {
   msg: string,
-  id: string
+  id: string,
+  name: string
 }
 @Component({
   selector: 'app-directives',
@@ -11,8 +12,8 @@ interface test {
 })
 export class DirectivesComponent {
   messages: test[]  = [
-    {msg: 'text', id: 'jesuislid'},
-    {msg: 'salut', id: 'coucou'}
+    {msg: 'text', id: 'jesuislid', name: 'Maud'},
+    {msg: 'salut', id: 'coucou', name: 'Marc'}
   ];
   coucou: boolean = false;
 
