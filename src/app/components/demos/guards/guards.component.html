@@ -1,0 +1,15 @@
+<router-outlet></router-outlet>
+
+<ng-container *ngIf="(isLoggedIn | async) === false">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+    <input type="text" pInputText formControlName="username" placeholder="Username" />
+    <p-message severity="error" text="Username is required" *ngIf="!loginForm.controls['username'].valid && (loginForm.controls['username'].dirty || loginForm.controls['username'].touched)"></p-message>
+
+    <input type="password" pInputText formControlName="password" placeholder="Password" />
+    <p-message severity="error" text="Password is required" *ngIf="!loginForm.controls['password'].valid && (loginForm.controls['password'].dirty || loginForm.controls['password'].touched)"></p-message>
+
+    <p-button type="submit" [disabled]="loginForm.invalid" label="Login"></p-button>
+
+  </form>
+</ng-container>

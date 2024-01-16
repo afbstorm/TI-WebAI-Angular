@@ -1,0 +1,17 @@
+<p-card header="Profil Utilisateur">
+  <ul>
+    <li>Nom: {{ user.lastname }}</li>
+    <li>Prénom: {{ user.firstname }}</li>
+    <li>Nom d'utilisateur: {{ user.username }}</li>
+  </ul>
+</p-card>
+
+<p-card header="Ajouter une série à la liste">
+  <form (ngSubmit)="addSerie()">
+    <input type="text" pInputText placeholder="Nom de la série" [(ngModel)]="newSerie" name="newSerie" />
+    <button pButton type="submit" label="Ajouter"></button>
+  </form>
+</p-card>
+
+<app-list [seriesList]="series"></app-list>
+

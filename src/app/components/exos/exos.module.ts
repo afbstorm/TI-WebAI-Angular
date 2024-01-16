@@ -10,8 +10,14 @@ import {ArticleComponent} from "./shopping-cart-v2/article/article.component";
 import {CartComponent} from "./shopping-cart-v2/cart/cart.component";
 import {SharedModule} from "../../shared/shared.module";
 import {InputTextModule} from "primeng/inputtext";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {Article2Component} from "./shopping-cart-v3/article/article2.component";
+import { ListComponent } from './crud/list/list.component';
+import { DetailsComponent } from './crud/details/details.component';
+import { CreationComponent } from './crud/creation/creation.component';
+import { CrudComponent } from './crud/crud.component';
+import {CardModule} from "primeng/card";
+import {ButtonModule} from "primeng/button";
 
 
 @NgModule({
@@ -22,14 +28,22 @@ import {Article2Component} from "./shopping-cart-v3/article/article2.component";
     CartComponent,
     ArticleComponent,
     Article2Component,
-    TransformNumToStringPipe
+    TransformNumToStringPipe,
+    ListComponent,
+    DetailsComponent,
+    CreationComponent,
+    CrudComponent
   ],
   imports: [
     CommonModule,
     ExosRoutingModule,
     SharedModule,
     InputTextModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
+    CardModule,
+    InputTextModule,
+    ButtonModule
   ]
 })
 export class ExosModule { }

@@ -7,6 +7,9 @@ import {DirectivesComponent} from "./directives/directives.component";
 import {ParentComponent} from "./input-ouput/parent/parent.component";
 import {FakeAuthComponent} from "./fake-auth/fake-auth.component";
 import {ReactiveFormsComponent} from "./reactive-forms/reactive-forms.component";
+import {GuardsComponent} from "./guards/guards.component";
+import {SecretPageComponent} from "./guards/secret-page/secret-page.component";
+import {authorizationGuard} from "../../shared/guards/authorization.guard";
 
 const routes: Routes = [
   {path: '', component: DemosComponent, children: [
@@ -15,7 +18,10 @@ const routes: Routes = [
       {path: 'directives', component: DirectivesComponent},
       {path: 'parent', component: ParentComponent},
       {path: 'services', component: FakeAuthComponent},
-      {path: 'forms', component: ReactiveFormsComponent}
+      {path: 'forms', component: ReactiveFormsComponent},
+      {path: 'login', component: GuardsComponent, children: [
+          {path: 'secret-page', component: SecretPageComponent, canActivate: [authorizationGuard]}
+        ]}
     ]}
 ]
 
