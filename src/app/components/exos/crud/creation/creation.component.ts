@@ -1,68 +1,74 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {birthdateValidator} from "../../../../shared/validators/birthdate.validator";
 import {CrudService} from "../crud.service";
-import {Subscription} from "rxjs";
 import {Router} from "@angular/router";
+import {specialCharacterValidator} from "../../../../shared/validators/specialCharacter.validator";
 
 @Component({
   selector: 'app-creation',
   templateUrl: './creation.component.html',
   styleUrls: ['./creation.component.scss']
 })
+
 export class CreationComponent {
+    accountCreation: FormGroup = new FormGroup({});
+    userLogin: FormGroup = new FormGroup({});
+    loginDisplay: boolean = false;
+    registerDisplay: boolean = true;
+    isLoggedIn!: boolean;
 
-  accountCreation: FormGroup = new FormGroup({});
-  userLogin: FormGroup = new FormGroup({});
-  loginDisplay: boolean = false;
-  registerDisplay: boolean = true;
-  isAuthSubscription: Subscription;
-  isAuthenticated: boolean = false;
+    private readonly commonValidators = [Validators.required];
+    private readonly passwordValidators = [Validators.required, specialCharacterValidator];
+    private readonly birthdateValidators = [birthdateValidator()];
 
-  constructor(private _fb: FormBuilder, private _authService: CrudService, private _router: Router) {
-    this.accountCreation = this._fb.group({
-      firstname: ['', [Validators.required]],
-      lastname: ['', [Validators.required]],
-      username: ['', [Validators.required]],
-      password: ['', [Validators.required]],
-      birthdate: [null, [birthdateValidator()]]
-    })
+    constructor(
+        private _fb: FormBuilder,
+        private _authService: CrudService,
+        private _router: Router
+    ) {
+        _authService.authState$.subscribe(
+            (authState: boolean) => this.isLoggedIn = authState
+        );
 
-    this.userLogin = this._fb.group({
-      username: ['', [Validators.required]],
-      password: ['', [Validators.required]]
-    })
+      this.accountCreation = this._fb.group({
+        firstname: ['', this.commonValidators],
+        lastname: ['', this.commonValidators],
+        username: ['', this.commonValidators],
+        password: ['', this.passwordValidators],
+        birthdate: [null, this.birthdateValidators]
+      })
 
-    this.isAuthSubscription = this._authService.isAuth.subscribe({
-      next: value => {
-        this.isAuthenticated = value;
-        if (this.isAuthenticated) {
-          localStorage.setItem('isAuth', 'auth');
-          this._router.navigate(['exos/crud/details'])
+      this.userLogin = this._fb.group({
+        username: ['', this.commonValidators],
+        password: ['', this.commonValidators]
+      })
+    }
+
+
+    changeDisplay() {
+        this.loginDisplay = !this.loginDisplay;
+        this.registerDisplay = !this.registerDisplay;
+    }
+
+    register() {
+        if (this.accountCreation.valid) {
+            this._authService.register(this.accountCreation.value)
+            this.changeDisplay()
         }
-      },
-      error: err => {
-        console.error(err)
-      }
-    })
-  }
-
-  changeDisplay() {
-    this.loginDisplay = !this.loginDisplay;
-    this.registerDisplay = !this.registerDisplay;
-  }
-
-  register() {
-    if (this.accountCreation.valid) {
-      this._authService.register(this.accountCreation.value)
-      this.changeDisplay()
     }
-  }
 
-  login() {
-    if (this.userLogin.valid) {
-      this._authService.login(this.userLogin.value)
+    login() {
+        if (this.userLogin.valid) {
+            try {
+                this._authService.login(this.userLogin.value)
+                if (this._authService.isLoggedIn()) {
+                  this._router.navigate(['exos/crud/details'])
+                }
+            } catch (error) {
+                console.error(error);
+                throw new Error('Invalid credentials');
+            }
+        }
     }
-  }
-
 }

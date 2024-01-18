@@ -15,17 +15,19 @@ export interface IRegister {
 export class CrudService {
   user: any;
   isAuth: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  authState$ = this.isAuth.asObservable();
 
   constructor() {
     localStorage.getItem('isAuth') ? this.isAuth.next(true) : null
   }
 
-  login (datas: {username: string, password: string}) {
+
+  login (user: {username: string, password: string}) {
     this.user = this.getUserInfos();
-    if (datas.username === this.user.username && datas.password === this.user.password) {
+    if (user.username === this.user.username && user.password === this.user.password) {
       this.isAuth.next(true)
     } else {
-      this.isAuth.next(false)
+      throw new Error(user.password);
     }
   }
 
@@ -40,5 +42,13 @@ export class CrudService {
       return JSON.parse(user);
     }
     return null;
+  }
+
+  isLoggedIn() {
+    return this.isAuth.value;
+  }
+
+  logout() {
+    this.isAuth.next(false);
   }
 }

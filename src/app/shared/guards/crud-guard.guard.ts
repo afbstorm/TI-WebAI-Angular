@@ -5,5 +5,5 @@ import {CrudService} from "../../components/exos/crud/crud.service";
 export const crudGuardGuard: CanActivateFn = () => {
   const authService = inject(CrudService);
 
-  return authService.isAuth.value;
+  return authService.isLoggedIn();
 };

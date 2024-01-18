@@ -13,10 +13,10 @@ import { EnfantComponent } from './input-ouput/enfant/enfant.component';
 import { FakeAuthComponent } from './fake-auth/fake-auth.component';
 import { ReactiveFormsComponent } from './reactive-forms/reactive-forms.component';
 import { GuardsComponent } from './guards/guards.component';
-import { SecretPageComponent } from './guards/secret-page/secret-page.component';
+import { SecretComponent } from './guards/secret/secret.component';
+import {InputTextModule} from "primeng/inputtext";
 import {MessageModule} from "primeng/message";
 import {ButtonModule} from "primeng/button";
-import {InputTextModule} from "primeng/inputtext";
 
 
 
@@ -32,7 +32,7 @@ import {InputTextModule} from "primeng/inputtext";
     FakeAuthComponent,
     ReactiveFormsComponent,
     GuardsComponent,
-    SecretPageComponent,
+    SecretComponent,
   ],
   imports: [
     CommonModule,
@@ -40,9 +40,9 @@ import {InputTextModule} from "primeng/inputtext";
     RouterOutlet,
     FormsModule,
     ReactiveFormsModule,
+    InputTextModule,
     MessageModule,
-    ButtonModule,
-    InputTextModule
+    ButtonModule
   ]
 })
 export class DemosModule { }

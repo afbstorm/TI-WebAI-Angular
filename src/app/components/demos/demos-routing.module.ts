@@ -8,7 +8,7 @@ import {ParentComponent} from "./input-ouput/parent/parent.component";
 import {FakeAuthComponent} from "./fake-auth/fake-auth.component";
 import {ReactiveFormsComponent} from "./reactive-forms/reactive-forms.component";
 import {GuardsComponent} from "./guards/guards.component";
-import {SecretPageComponent} from "./guards/secret-page/secret-page.component";
+import {SecretComponent} from "./guards/secret/secret.component";
 import {authorizationGuard} from "../../shared/guards/authorization.guard";
 
 const routes: Routes = [
@@ -20,8 +20,8 @@ const routes: Routes = [
       {path: 'services', component: FakeAuthComponent},
       {path: 'forms', component: ReactiveFormsComponent},
       {path: 'login', component: GuardsComponent, children: [
-          {path: 'secret-page', component: SecretPageComponent, canActivate: [authorizationGuard]}
-        ]}
+          {path: 'secret-page', component: SecretComponent, canActivate: [authorizationGuard]}
+        ]},
     ]}
 ]
 
